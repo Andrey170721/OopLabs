@@ -1,15 +1,38 @@
+using System;
 using Isu.Tools;
 
 namespace Isu.Services
 {
-    public class CourseNumber
+    public enum CourseNumber
     {
-        public CourseNumber(string name)
-        {
-            Number = name[2] - '0';
-            if (Number > 6 || Number < 1) throw new IsuException("Invalid Course Number");
-        }
+        /// <summary>
+        /// Course
+        /// </summary>
+        C1 = 1,
 
-        public int Number { get; }
+        /// <summary>
+        /// Course
+        /// </summary>
+        C2 = 2,
+
+        /// <summary>
+        /// Course
+        /// </summary>
+        C3 = 3,
+
+        /// <summary>
+        /// Course
+        /// </summary>
+        C4 = 4,
+
+        /// <summary>
+        /// Course
+        /// </summary>
+        C5 = 5,
+
+        /// <summary>
+        /// Course
+        /// </summary>
+        C6 = 6,
     }
 }

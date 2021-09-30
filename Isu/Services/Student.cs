@@ -2,16 +2,14 @@ namespace Isu.Services
 {
     public class Student
     {
-        private static int id = 0;
-        public Student(string name, GroupName newGroup)
+        public Student(int id, string name, GroupName newGroup)
         {
-            id++;
-            ID = id;
+            Id = id;
             Name = name;
             GroupName = newGroup;
         }
 
-        public int ID { get; }
+        public int Id { get; }
         public string Name { get; }
         public GroupName GroupName { get; private set; }
 

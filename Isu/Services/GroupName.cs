@@ -7,10 +7,11 @@ namespace Isu.Services
     {
         public GroupName(string name)
         {
-            int buff1 = name[3] - '0';
-            int buff2 = name[4] - '0';
+            int buff0 = int.Parse(name[2].ToString());
+            int buff1 = int.Parse(name[3].ToString());
+            int buff2 = int.Parse(name[4].ToString());
             NumberOfGroup = (buff1 * 10) + buff2;
-            NumberOfCourse = new CourseNumber(name);
+            NumberOfCourse = (CourseNumber)buff0;
             FullName = name;
             if (name[0] != 'M'
                 || name[1] != '3'

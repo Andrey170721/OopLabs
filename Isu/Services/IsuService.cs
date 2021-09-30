@@ -8,10 +8,11 @@ namespace Isu.Services
     {
         private List<Group> _groups = new List<Group>();
         private List<Student> _students = new List<Student>();
+        private int _id = 0;
 
-        public Group AddGroup(GroupName name)
+        public Group AddGroup(GroupName name, int maxStudentNumber)
         {
-            var group = new Group(name, 5);
+            var group = new Group(name, maxStudentNumber);
             _groups.Add(group);
             return group;
         }
@@ -19,15 +20,16 @@ namespace Isu.Services
         public Student AddStudent(Group group, string name)
         {
             if (!_groups.Exists(g => g == group)) throw new IsuException("Group not exist");
-            var student = new Student(name, group.GroupName);
+            var student = new Student(_id, name, group.GroupName);
             _students.Add(student);
             group.AddStudent(student);
+            _id++;
             return student;
         }
 
         public Student GetStudent(int id)
         {
-            return _students.Find(s => s.ID == id) ?? throw new IsuException("ID not exist");
+            return _students.Find(s => s.Id == id) ?? throw new IsuException("ID not exist");
         }
 
         public Student FindStudent(string name)
