@@ -14,7 +14,7 @@ namespace Isu.Services
 
         public GroupName GroupName { get; }
         public List<Student> Students { get; }
-        public int MaxStudentNum { get; private set; }
+        public int MaxStudentNum { get; }
         public int NumberOfStudents { get; private set; }
 
         public void AddStudent(Student student)
@@ -27,6 +27,7 @@ namespace Isu.Services
         public void RemoveStudent(Student student)
         {
             Students.Remove(student);
+            NumberOfStudents--;
         }
     }
 }

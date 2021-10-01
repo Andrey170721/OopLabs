@@ -65,7 +65,8 @@ namespace Isu.Services
 
             oldGroup?.RemoveStudent(student);
             newGroup.AddStudent(student);
-            student.ChangeGroup(newGroup.GroupName);
+            _students.Add(new Student(student.Id, student.Name, newGroup.GroupName));
+            _students.Remove(student);
         }
     }
 }
