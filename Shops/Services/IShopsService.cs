@@ -16,5 +16,6 @@ namespace Shops.Services
         void SetPrice(Shop shop, string productName, int newPrice);
 
         Shop FindMinPrice(ProductSample product);
+        public List<Product> GetProductList(Shop shop);
     }
 }

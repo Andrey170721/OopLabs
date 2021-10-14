@@ -5,14 +5,13 @@ namespace Shops.Services
 {
     public class ShopManager
     {
+        private List<Product> _products = new List<Product>();
         public ShopManager(Shop newShop)
         {
             Shop = newShop;
         }
 
         public Shop Shop { get; }
-        private List<Product> _products = new List<Product>();
-
         public void AddProducts(List<Product> newProducts)
         {
             foreach (Product newProduct in newProducts)
@@ -59,6 +58,11 @@ namespace Shops.Services
         {
             Product foundProduct = _products.Find(p => p.Name == product.Name);
             return foundProduct;
+        }
+
+        public List<Product> GetProductList()
+        {
+            return _products;
         }
     }
 }

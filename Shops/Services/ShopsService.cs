@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Net;
 
 namespace Shops.Services
 {
@@ -62,6 +61,12 @@ namespace Shops.Services
             }
 
             return minPriceShop ?? throw new Exception("Product not found");
+        }
+
+        public List<Product> GetProductList(Shop shop)
+        {
+            ShopManager manager = _shopManagers.Find(m => m.Shop == shop) ?? throw new Exception();
+            return manager.GetProductList();
         }
     }
 }
