@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace Shops.Services
 {
-    public class ShopManager
+    public class ProductManager
     {
         private List<Product> _products = new List<Product>();
-        public ShopManager(Shop newShop)
+        public ProductManager(Shop newShop)
         {
             Shop = newShop;
         }
@@ -16,8 +16,8 @@ namespace Shops.Services
         {
             foreach (Product newProduct in newProducts)
             {
-                Product oldProduct = _products.Find(p => p.Name == newProduct.Name) ?? throw new Exception();
-                if (oldProduct == newProduct)
+                Product oldProduct = _products.Find(p => p.Name == newProduct.Name);
+                if (oldProduct != null)
                 {
                     _products.Remove(oldProduct);
                     _products.Add(new Product(oldProduct.Name, oldProduct.Number + newProduct.Number, oldProduct.Price));
@@ -27,8 +27,6 @@ namespace Shops.Services
                     _products.Add(newProduct);
                 }
             }
-
-            _products.AddRange(newProducts);
         }
 
         public int BuyProducts(List<ProductSample> sellProducts)
