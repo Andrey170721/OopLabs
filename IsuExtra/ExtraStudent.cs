@@ -1,3 +1,4 @@
+using System;
 using Isu.Services;
 
 namespace IsuExtra
@@ -11,8 +12,16 @@ namespace IsuExtra
         {
         }
 
+        public new ExtraGroupName GroupName { get; }
+
         public void AddOGNP(OGNP oGNP)
         {
+            if (GroupName.MegaFaculty == oGNP.MegaFaculty)
+            {
+                throw new Exception("Student has the same MegaFaculty as OGNP");
+            }
+
+            
             if (firstOGNP == null)
             {
                 firstOGNP = oGNP;

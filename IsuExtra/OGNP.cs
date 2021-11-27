@@ -1,14 +1,21 @@
+using System.Collections.Generic;
+using Isu.Services;
+
 namespace IsuExtra
 {
     public class OGNP
     {
-        public OGNP(string mf, int num)
+        public OGNP(string mf)
         {
             MegaFaculty = mf;
-            PlaceNum = num;
         }
 
         public string MegaFaculty { get; }
-        public int PlaceNum { get; }
+        public List<Stream> Streams { get; }
+
+        public void AddNewStream(Timetable timetable, int placeNum)
+        {
+            Streams.Add(new Stream(timetable, placeNum));
+        }
     }
 }
