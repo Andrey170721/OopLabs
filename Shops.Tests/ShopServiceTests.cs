@@ -24,6 +24,8 @@ namespace Shops.Tests
             productList.Add(new Product("Apple", 3, 25));
             _shopsService.AddProducts(shop, productList);
             List<Product> prList = _shopsService.GetProductList(shop);
+            Assert.AreEqual(prList, productList);
+
         }
 
         [Test]
@@ -35,7 +37,8 @@ namespace Shops.Tests
             _shopsService.AddProducts(shop, productList);
             _shopsService.SetPrice(shop, "Apple", 40);
             List<Product> prList = _shopsService.GetProductList(shop);
-            
+            productList = new List<Product>();
+            productList.Add(new Product("Apple", 3, 40));
         }
 
         [Test]
