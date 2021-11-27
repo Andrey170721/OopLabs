@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Backups.Repositories;
+using Backups.Tools;
 
 namespace Backups.Entity
 {
@@ -43,7 +44,7 @@ namespace Backups.Entity
             }
             else
             {
-                throw new Exception("invalid storage algorithm");
+                throw new BackupsException("invalid storage algorithm");
             }
 
             _id++;
