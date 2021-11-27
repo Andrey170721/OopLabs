@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Shops.Tools;
 
 namespace Shops.Services
 {
@@ -34,8 +35,8 @@ namespace Shops.Services
             int price = 0;
             foreach (ProductSample sellProduct in sellProducts)
             {
-                Product oldProduct = _products.Find(p => p.Name == sellProduct.Name) ?? throw new Exception();
-                if (oldProduct.Number - sellProduct.Number < 0) throw new Exception("not enough products");
+                Product oldProduct = _products.Find(p => p.Name == sellProduct.Name) ?? throw new ShopException();
+                if (oldProduct.Number - sellProduct.Number < 0) throw new ShopException("not enough products");
                 var changedProduct = new Product(sellProduct.Name, oldProduct.Number - sellProduct.Number, oldProduct.Price);
                 _products.Remove(oldProduct);
                 _products.Add(changedProduct);
@@ -47,7 +48,7 @@ namespace Shops.Services
 
         public void ChangePrice(string productName, int newPrice)
         {
-            Product product = _products.Find(p => p.Name == productName) ?? throw new Exception("Product not find");
+            Product product = _products.Find(p => p.Name == productName) ?? throw new ShopException("Product not find");
             _products.Remove(product);
             _products.Add(new Product(product.Name, product.Number, newPrice));
         }

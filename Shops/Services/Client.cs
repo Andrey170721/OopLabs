@@ -1,4 +1,5 @@
 using System;
+using Shops.Tools;
 
 namespace Shops.Services
 {
@@ -18,7 +19,7 @@ namespace Shops.Services
             int remainMoney = AmountMoney - sum;
             if (remainMoney < 0)
             {
-                throw new Exception("not enough money");
+                throw new ShopException("not enough money");
             }
 
             var changedClient = new Client(Name, remainMoney);

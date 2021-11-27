@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Shops.Tools;
 
 namespace Shops.Services
 {
@@ -25,20 +26,20 @@ namespace Shops.Services
 
         public void AddProducts(Shop shop, List<Product> products)
         {
-            ProductManager manager = _shopManagers.Find(m => m.Shop == shop) ?? throw new Exception();
+            ProductManager manager = _shopManagers.Find(m => m.Shop == shop) ?? throw new ShopException("manager not found");
             manager.AddProducts(products);
         }
 
         public void BuyProducts(Client client, Shop shop, List<ProductSample> shopList)
         {
-            ProductManager manager = _shopManagers.Find(m => m.Shop == shop) ?? throw new Exception();
+            ProductManager manager = _shopManagers.Find(m => m.Shop == shop) ?? throw new ShopException("manager not found");
             int price = manager.BuyProducts(shopList);
             Client changedClient = client.Buy(price);
         }
 
         public void SetPrice(Shop shop, string productName, int newPrice)
         {
-            ProductManager manager = _shopManagers.Find(m => m.Shop == shop) ?? throw new Exception();
+            ProductManager manager = _shopManagers.Find(m => m.Shop == shop) ?? throw new ShopException("manager not found");
             manager.ChangePrice(productName, newPrice);
         }
 
@@ -48,7 +49,7 @@ namespace Shops.Services
             int minPrice = int.MaxValue;
             foreach (Shop shop in _shops)
             {
-                ProductManager manager = _shopManagers.Find(m => m.Shop == shop) ?? throw new Exception();
+                ProductManager manager = _shopManagers.Find(m => m.Shop == shop) ?? throw new Exception("manager not found");
                 Product foundProduct = manager.FindProduct(product);
                 if (foundProduct != null)
                 {
@@ -60,12 +61,12 @@ namespace Shops.Services
                 }
             }
 
-            return minPriceShop ?? throw new Exception("Product not found");
+            return minPriceShop ?? throw new ShopException("Product not found");
         }
 
         public List<Product> GetProductList(Shop shop)
         {
-            ProductManager manager = _shopManagers.Find(m => m.Shop == shop) ?? throw new Exception();
+            ProductManager manager = _shopManagers.Find(m => m.Shop == shop) ?? throw new ShopException("manager not found");
             return manager.GetProductList();
         }
     }
