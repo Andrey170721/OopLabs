@@ -8,11 +8,11 @@ namespace Backups.Entity
 {
     public class BackupJob
     {
-        private int _id = 0;
-        private List<string> jobObjects = new List<string>();
-        private FileStorageRepository fileStorage = new FileStorageRepository();
-        private List<RestorePoint> _restorePoints = new List<RestorePoint>();
-        private List<Storage> _storages = new List<Storage>();
+        protected int _id = 0;
+        protected List<string> jobObjects = new List<string>();
+        protected FileStorageRepository fileStorage = new FileStorageRepository();
+        protected List<RestorePoint> _restorePoints = new List<RestorePoint>();
+        protected List<Storage> _storages = new List<Storage>();
 
         public BackupJob(string path)
         {
