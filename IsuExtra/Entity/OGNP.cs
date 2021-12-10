@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Isu.Services;
+using IsuExtra.Entity;
+using IsuExtra.Tools;
 
 namespace IsuExtra
 {
@@ -7,6 +9,11 @@ namespace IsuExtra
     {
         public OGNP(string mf)
         {
+            if (mf.Length > 1)
+            {
+                throw new IsuExtraException("Invalid MegafacultyName");
+            }
+
             MegaFaculty = mf;
         }
 

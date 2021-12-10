@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using IsuExtra.Tools;
 
-namespace IsuExtra
+namespace IsuExtra.Entity
 {
     public class Timetable
     {
@@ -15,30 +16,24 @@ namespace IsuExtra
             Couple couple = new Couple(dayOfWeek, startTime, endTime);
             foreach (var item in Couples)
             {
-                CheckCouples(item, couple);
+                if (CheckCouples(item, couple))
+                    throw new IsuExtraException("intersection of pairs");
             }
 
             Couples.Add(couple);
         }
 
-        public void CheckTimetables(Timetable timetable)
-        {
-            foreach (var item1 in timetable.Couples)
-            {
-                foreach (var item2 in Couples)
-                {
-                    CheckCouples();
-                }
-            }
-        }
-
-        public void CheckCouples(Couple couple1, Couple couple2)
+        public bool CheckCouples(Couple couple1, Couple couple2)
         {
             if (couple1.DayOfWeek == couple2.DayOfWeek
                 && (!(couple1.StartTime < couple2.StartTime && couple1.EndTime < couple2.EndTime)
                     || !(couple1.StartTime > couple2.StartTime && couple1.EndTime > couple2.EndTime)))
             {
-                throw new Exception("intersection of pairs");
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

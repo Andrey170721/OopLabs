@@ -1,6 +1,6 @@
 using Isu.Services;
 
-namespace IsuExtra
+namespace IsuExtra.Entity
 {
     public class ExtraGroup : Group
     {

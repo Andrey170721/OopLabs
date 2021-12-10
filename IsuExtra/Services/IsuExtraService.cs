@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using Isu.Services;
+using IsuExtra.Entity;
+using IsuExtra.Tools;
 
-namespace IsuExtra
+namespace IsuExtra.Services
 {
-    public class IsuExtraService : IsuService
+    public class IsuExtraService
     {
         private List<ExtraGroup> _groups = new List<ExtraGroup>();
         private List<ExtraStudent> _students = new List<ExtraStudent>();
@@ -16,7 +18,7 @@ namespace IsuExtra
             return group;
         }
 
-        public Student AddStudent(ExtraGroup group, string name)
+        public ExtraStudent AddStudent(ExtraGroup group, string name)
         {
             if (!_groups.Exists(g => g == group)) throw new Exception("Group not exist");
             var student = new ExtraStudent(_id, name, group.GroupName);
@@ -41,8 +43,21 @@ namespace IsuExtra
         {
             ExtraGroup group = _groups.Find(g => student.GroupName == g.GroupName);
             List<Couple> groupTimetable = group.Timetable.Couples;
-            foreach() 
-                student.AddOGNP(oGNP);
+            foreach (Stream stream in oGNP.Streams)
+            {
+                bool isTimetablesNotOverlap = stream.CheckTimetables(stream.Timetable, group.Timetable);
+                bool isEnoughPlaces = stream.AddStudent();
+                stream.AddStudent();
+                if (isEnoughPlaces & isEnoughPlaces)
+                {
+                    student.AddOGNP(oGNP);
+                }
+            }
+
+            if (!student.CheckOgnp(oGNP))
+            {
+                throw new IsuExtraException("the student has an overlap with the timetable or no places");
+            }
         }
 
         public void RemoveStudentFromOGNP(ExtraStudent student, OGNP oGNP)
@@ -52,17 +67,14 @@ namespace IsuExtra
 
         public void GetCourseStreams()
         {
-            
         }
 
         public void GetStudentListFromOgnpGroup()
         {
-            
         }
 
         public void GetStudentsWithoutOgnp()
         {
-            
         }
     }
 }

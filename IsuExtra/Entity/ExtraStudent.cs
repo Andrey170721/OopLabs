@@ -1,7 +1,7 @@
 using System;
 using Isu.Services;
 
-namespace IsuExtra
+namespace IsuExtra.Entity
 {
     public class ExtraStudent : Student
     {
@@ -21,7 +21,6 @@ namespace IsuExtra
                 throw new Exception("Student has the same MegaFaculty as OGNP");
             }
 
-            
             if (firstOGNP == null)
             {
                 firstOGNP = oGNP;
@@ -43,6 +42,16 @@ namespace IsuExtra
             {
                 secondOGNP = null;
             }
+        }
+
+        public bool CheckOgnp(OGNP ognp)
+        {
+            if (firstOGNP == ognp || secondOGNP == ognp)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
