@@ -20,7 +20,7 @@ namespace Banks.Entity
             
         }
 
-        public Withdraw()
+        public void Withdraw()
         {
             
         }
