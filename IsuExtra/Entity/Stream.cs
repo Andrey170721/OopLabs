@@ -1,19 +1,21 @@
 using System.Collections.Generic;
 using IsuExtra.Entity;
+using IsuExtra.Tools;
 
 namespace IsuExtra
 {
     public class Stream
     {
+        private readonly List<ExtraStudent> _students;
         private int _currPlaces = 0;
         public Stream(Timetable timetable, int placeNum)
         {
             Timetable = timetable;
             PlaceNum = placeNum;
-            Students = new List<ExtraStudent>();
+            _students = new List<ExtraStudent>();
         }
 
-        public List<ExtraStudent> Students { get; }
+        public IReadOnlyList<ExtraStudent> Students => _students.AsReadOnly();
 
         public Timetable Timetable { get; }
         public int PlaceNum { get; }
@@ -42,14 +44,22 @@ namespace IsuExtra
                 return false;
             }
 
-            Students.Add(newStudent);
+            _students.Add(newStudent);
             _currPlaces++;
             return true;
         }
 
         public void RemoveStudent(ExtraStudent student)
         {
-            Students.Remove(student);
+            if (_students.Exists(s => s == student))
+            {
+                _students.Remove(student);
+            }
+            else
+            {
+                throw new IsuExtraException("student doesn't exists");
+            }
+
             _currPlaces--;
         }
     }

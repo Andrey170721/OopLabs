@@ -26,7 +26,7 @@ namespace IsuExtra.Tests
             timetable2.AddNewCouple(DayOfWeek.Thursday, 12, 14);
             ExtraGroup group = _isuService.AddGroup(groupName, 4, timetable1);
             ExtraStudent student = _isuService.AddStudent(group, "IVAN");
-            OGNP ognp = _isuService.AddNewOgnp("E");
+            OGNP ognp = _isuService.AddNewOgnp('E');
             ognp.AddNewStream(timetable2, 4);
             _isuService.AddStudentToOGNP(student, ognp);
         }
@@ -42,7 +42,7 @@ namespace IsuExtra.Tests
             timetable2.AddNewCouple(DayOfWeek.Thursday, 12, 14);
             ExtraGroup group = _isuService.AddGroup(groupName, 4, timetable1);
             ExtraStudent student = _isuService.AddStudent(group, "IVAN");
-            OGNP ognp = _isuService.AddNewOgnp("E");
+            OGNP ognp = _isuService.AddNewOgnp('E');
             ognp.AddNewStream(timetable2, 4);
             _isuService.AddStudentToOGNP(student, ognp);
             _isuService.RemoveStudentFromOGNP(student, ognp);

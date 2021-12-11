@@ -7,23 +7,21 @@ namespace IsuExtra
 {
     public class OGNP
     {
-        public OGNP(string mf)
-        {
-            if (mf.Length > 1)
-            {
-                throw new IsuExtraException("Invalid MegafacultyName");
-            }
+        private readonly List<Stream> _streams;
 
+        public OGNP(char mf)
+        {
             MegaFaculty = mf;
-            Streams = new List<Stream>();
+            _streams = new List<Stream>();
         }
 
-        public string MegaFaculty { get; }
-        public List<Stream> Streams { get; }
+        public char MegaFaculty { get; }
+
+        public IReadOnlyList<Stream> Streams => _streams.AsReadOnly();
 
         public void AddNewStream(Timetable timetable, int placeNum)
         {
-            Streams.Add(new Stream(timetable, placeNum));
+            _streams.Add(new Stream(timetable, placeNum));
         }
     }
 }

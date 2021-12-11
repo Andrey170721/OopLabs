@@ -26,16 +26,7 @@ namespace IsuExtra.Entity
 
         public bool CheckCouples(Couple couple1, Couple couple2)
         {
-            if (couple1.DayOfWeek == couple2.DayOfWeek
-                && (!(couple1.StartTime < couple2.StartTime && couple1.EndTime < couple2.EndTime)
-                    || !(couple1.StartTime > couple2.StartTime && couple1.EndTime > couple2.EndTime)))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return couple1.Equals(couple2);
         }
     }
 }

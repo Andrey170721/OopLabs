@@ -6,22 +6,23 @@ namespace IsuExtra.Entity
 {
     public class ExtraGroup : Group
     {
+        private readonly List<ExtraStudent> _students;
         public ExtraGroup(ExtraGroupName newGroup, int maxStudentNumber, Timetable timetable)
             : base(newGroup, maxStudentNumber)
         {
             Timetable = timetable;
             GroupName = newGroup;
-            Students = new List<ExtraStudent>();
+            _students = new List<ExtraStudent>();
         }
 
         public Timetable Timetable { get; }
         public new ExtraGroupName GroupName { get; }
-        public new List<ExtraStudent> Students { get; }
+        public new IReadOnlyList<ExtraStudent> Students => _students.AsReadOnly();
         public void AddStudent(ExtraStudent student)
         {
             NumberOfStudents++;
             if (NumberOfStudents > MaxStudentNum) throw new IsuExtraException("Max students exceeded");
-            Students.Add(student);
+            _students.Add(student);
         }
     }
 }
