@@ -8,12 +8,12 @@ namespace BackupsExtra.Entity
 {
     public class BackupJobExtra : BackupJob
     {
-        private new FileStorageRepositoryExtra fileStorage = new FileStorageRepositoryExtra();
         private int _maxNumberOfRestorePoints;
         private string _logerType;
         public BackupJobExtra(string path, int maxNumberOfRestorePoints, string logerType)
             : base(path)
         {
+            FileStorage = new FileStorageRepositoryExtra();
             _maxNumberOfRestorePoints = maxNumberOfRestorePoints;
             if (!(logerType == "Console" || logerType == "File"))
             {
@@ -23,32 +23,40 @@ namespace BackupsExtra.Entity
             _logerType = logerType;
         }
 
+        public new FileStorageRepositoryExtra FileStorage { get; }
+
         public new void CreateRestorePoint(string algorithm)
         {
-            var newPoint = new RestorePoint(jobObjects, _id);
+            var newPoint = new RestorePoint(JobObjects, Id);
             Storage storage;
             if (algorithm == "Split")
             {
-                storage = new Storage(fileStorage.CreateSplitStorage(jobObjects, Path), _id);
+                storage = new Storage(FileStorage.CreateSplitStorage(JobObjects, Path), Id);
+                string message = "Split storage created:" + storage.Path;
+                Loger.WriteLog(message, _logerType);
             }
             else if (algorithm == "Single")
             {
-                storage = new Storage(fileStorage.CreateSingleStorage(jobObjects, Path), _id);
+                storage = new Storage(FileStorage.CreateSingleStorage(JobObjects, Path), Id);
+                string message = "Single storage created:" + storage.Path;
+                Loger.WriteLog(message, _logerType);
             }
             else
             {
                 throw new BackupsExtraException("invalid storage algorithm");
             }
 
-            _id++;
-            _storages.Add(storage);
-            _restorePoints.Add(newPoint);
-            fileStorage.CleanPoints(_maxNumberOfRestorePoints, _storages);
+            Id++;
+            Storages.Add(storage);
+            RestorePoints.Add(newPoint);
+            FileStorage.CleanPoints(_maxNumberOfRestorePoints, Storages, _logerType);
         }
 
         public void Recover(Storage restorePoint, string restorePath)
         {
-            
+            FileStorage.Recover(restorePoint, restorePath);
+            string message = "Recover restore point: " + restorePoint.Path + " in directory " + restorePath;
+            Loger.WriteLog(message, _logerType);
         }
     }
 }

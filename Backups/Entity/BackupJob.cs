@@ -8,48 +8,52 @@ namespace Backups.Entity
 {
     public class BackupJob
     {
-        protected int _id = 0;
-        protected List<string> jobObjects = new List<string>();
-        protected FileStorageRepository fileStorage = new FileStorageRepository();
-        protected List<RestorePoint> _restorePoints = new List<RestorePoint>();
-        protected List<Storage> _storages = new List<Storage>();
-
         public BackupJob(string path)
         {
             Path = path + "/Backup";
+            Id = 0;
+            JobObjects = new List<string>();
+            FileStorage = new FileStorageRepository();
+            RestorePoints = new List<RestorePoint>();
+            Storages = new List<Storage>();
         }
 
+        public int Id { get; set; }
+        public List<string> JobObjects { get; }
+        public FileStorageRepository FileStorage { get; }
+        public List<RestorePoint> RestorePoints { get; }
+        public List<Storage> Storages { get; }
         public string Path { get; }
         public void AddJobObject(string fileName)
         {
-            jobObjects.Add(fileName);
+            JobObjects.Add(fileName);
         }
 
         public void RemoveJobObject(string fileName)
         {
-            jobObjects.Remove(fileName);
+            JobObjects.Remove(fileName);
         }
 
         public void CreateRestorePoint(string algorithm)
         {
-            var newPoint = new RestorePoint(jobObjects, _id);
+            var newPoint = new RestorePoint(JobObjects, Id);
             Storage storage;
             if (algorithm == "Split")
             {
-                storage = new Storage(fileStorage.CreateSplitStorage(jobObjects, Path), _id);
+                storage = new Storage(FileStorage.CreateSplitStorage(JobObjects, Path), Id);
             }
             else if (algorithm == "Single")
             {
-                storage = new Storage(fileStorage.CreateSingleStorage(jobObjects, Path), _id);
+                storage = new Storage(FileStorage.CreateSingleStorage(JobObjects, Path), Id);
             }
             else
             {
                 throw new BackupsException("invalid storage algorithm");
             }
 
-            _id++;
-            _storages.Add(storage);
-            _restorePoints.Add(newPoint);
+            Id++;
+            Storages.Add(storage);
+            RestorePoints.Add(newPoint);
         }
     }
 }
