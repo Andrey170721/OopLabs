@@ -5,6 +5,10 @@ namespace Isu.Services
 {
     public class GroupName
     {
+        public GroupName()
+        {
+        }
+
         public GroupName(string name)
         {
             int buff0 = int.Parse(name[2].ToString());
