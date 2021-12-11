@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using IsuExtra.Entity;
 
 namespace IsuExtra
@@ -9,7 +10,10 @@ namespace IsuExtra
         {
             Timetable = timetable;
             PlaceNum = placeNum;
+            Students = new List<ExtraStudent>();
         }
+
+        public List<ExtraStudent> Students { get; }
 
         public Timetable Timetable { get; }
         public int PlaceNum { get; }
@@ -31,19 +35,21 @@ namespace IsuExtra
             return true;
         }
 
-        public bool AddStudent()
+        public bool AddStudent(ExtraStudent newStudent)
         {
             if (_currPlaces == PlaceNum)
             {
                 return false;
             }
 
+            Students.Add(newStudent);
             _currPlaces++;
             return true;
         }
 
-        public void RemoveStudent()
+        public void RemoveStudent(ExtraStudent student)
         {
+            Students.Remove(student);
             _currPlaces--;
         }
     }

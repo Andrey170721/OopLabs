@@ -10,6 +10,7 @@ namespace IsuExtra.Entity
         public ExtraStudent(int id, string name, ExtraGroupName newGroup)
             : base(id, name, newGroup)
         {
+            GroupName = newGroup;
         }
 
         public new ExtraGroupName GroupName { get; }

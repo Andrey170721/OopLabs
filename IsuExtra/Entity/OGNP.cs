@@ -15,6 +15,7 @@ namespace IsuExtra
             }
 
             MegaFaculty = mf;
+            Streams = new List<Stream>();
         }
 
         public string MegaFaculty { get; }

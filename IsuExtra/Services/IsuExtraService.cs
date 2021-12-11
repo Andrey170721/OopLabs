@@ -46,9 +46,8 @@ namespace IsuExtra.Services
             foreach (Stream stream in oGNP.Streams)
             {
                 bool isTimetablesNotOverlap = stream.CheckTimetables(stream.Timetable, group.Timetable);
-                bool isEnoughPlaces = stream.AddStudent();
-                stream.AddStudent();
-                if (isEnoughPlaces & isEnoughPlaces)
+                bool isEnoughPlaces = stream.AddStudent(student);
+                if (isEnoughPlaces & isTimetablesNotOverlap)
                 {
                     student.AddOGNP(oGNP);
                 }
@@ -63,18 +62,30 @@ namespace IsuExtra.Services
         public void RemoveStudentFromOGNP(ExtraStudent student, OGNP oGNP)
         {
             student.RemoveOGNP(oGNP);
+            foreach (var stream in oGNP.Streams)
+            {
+                if (stream.Students.Exists(s => s == student))
+                {
+                    stream.RemoveStudent(student);
+                }
+            }
         }
 
-        public void GetCourseStreams()
+        public List<Stream> GetCourseStreams(OGNP ognp)
         {
+            return ognp.Streams;
         }
 
-        public void GetStudentListFromOgnpGroup()
+        public List<ExtraStudent> GetStudentListFromOgnpGroup(Stream stream)
         {
+            return stream.Students;
         }
 
-        public void GetStudentsWithoutOgnp()
+        public void GetStudentsWithoutOgnp(ExtraGroup group)
         {
+            foreach (var student in group.Students)
+            {
+            }
         }
     }
 }

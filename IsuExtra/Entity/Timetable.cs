@@ -8,6 +8,7 @@ namespace IsuExtra.Entity
     {
         public Timetable()
         {
+            Couples = new List<Couple>();
         }
 
         public List<Couple> Couples { get; }
