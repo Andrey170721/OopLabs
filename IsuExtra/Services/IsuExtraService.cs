@@ -81,11 +81,19 @@ namespace IsuExtra.Services
             return stream.Students;
         }
 
-        public void GetStudentsWithoutOgnp(ExtraGroup group)
+        public List<ExtraStudent> GetStudentsWithoutOgnp(ExtraGroup group)
         {
+            List<ExtraStudent> students = new List<ExtraStudent>();
             foreach (var student in group.Students)
             {
+                bool isStudentInOgnp = student.IsStudentInOgnp();
+                if (isStudentInOgnp == false)
+                {
+                    students.Add(student);
+                }
             }
+
+            return students;
         }
     }
 }

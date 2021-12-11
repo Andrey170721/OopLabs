@@ -54,5 +54,15 @@ namespace IsuExtra.Entity
 
             return false;
         }
+
+        public bool IsStudentInOgnp()
+        {
+            if (firstOGNP == null || secondOGNP == null)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }
