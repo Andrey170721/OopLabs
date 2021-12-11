@@ -2,7 +2,7 @@ namespace Banks.Entity
 {
     public class Bank
     {
-        public void Bank(int id, string name)
+        public Bank(int id, string name)
         {
             Name = name;
             Id = id;
@@ -10,6 +10,7 @@ namespace Banks.Entity
 
         public string Name { get; }
         public int Id { get; }
+        
         public Client AddClient()
         {
             
