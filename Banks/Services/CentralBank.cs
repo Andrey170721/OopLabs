@@ -6,26 +6,26 @@ namespace Banks.Services
 {
     public class CentralBank
     {
-        private List<Bank> _banks = new List<Bank>();
         private int _id = 0;
-        public void CreateBank(string name)
+        private List<Bank> _banks;
+
+        public CentralBank()
         {
-            _banks.Add(new Bank(_id, name));
+            _banks = new List<Bank>();
+        }
+
+        public Bank CreateBank(string name, float percentOnBalance, float creditPercent, float creditLimit, int depositTime)
+        {
+            Bank bank = new Bank(_id, name, percentOnBalance, creditPercent, creditLimit, depositTime);
+            _banks.Add(bank);
             _id++;
+            return bank;
         }
 
-        public AddClient(string name, string surname)
+        public Bank FindBank(Client client)
         {
-            
-        }
-
-        public AddClient(string name, string surname, int passport, string address)
-        {
-            
-        }
-        public void Transaction(Bank sender, Bank recipient, int money)
-        {
-            
+            Bank bank = _banks.Find(b => b.Clients.Contains(client));
+            return bank;
         }
     }
 }

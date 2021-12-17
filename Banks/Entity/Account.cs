@@ -4,9 +4,12 @@ namespace Banks.Entity
 {
     public abstract class Account
     {
-        protected int amountMoney;
-        public abstract int Replenishment(int money);
-        public abstract int Withdraw(int money);
-        public abstract int Transfer(int money, Client client);
+        protected float amountMoney;
+        public Bank Bank { get; protected set; }
+        public Client Owner { get; protected set; }
+        public abstract void Replenishment(float amount);
+        public abstract void Withdraw(float amount);
+        public abstract void Transfer(float amount, Account recipient);
         public abstract void CancelingTransaction(int id);
     }
+}
