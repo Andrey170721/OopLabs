@@ -1,15 +1,15 @@
-using System.Dynamic;
-
 namespace Banks.Entity
 {
     public abstract class Account
     {
-        protected float amountMoney;
+        public double AmountMoney { get; protected set; }
         public Bank Bank { get; protected set; }
         public Client Owner { get; protected set; }
-        public abstract void Replenishment(float amount);
-        public abstract void Withdraw(float amount);
-        public abstract void Transfer(float amount, Account recipient);
-        public abstract void CancelingTransaction(int id);
+        public abstract void Replenishment(double amount);
+        public abstract void Withdraw(double amount);
+        public abstract void Transfer(double amount, Account recipient);
+        public abstract void PercentCounter();
+
+        public abstract void AccrualPercent();
     }
 }

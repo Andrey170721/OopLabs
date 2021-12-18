@@ -1,56 +1,48 @@
-using System.Threading;
 using Banks.Tools;
 
 namespace Banks.Entity
 {
     public class CreditAccount : Account
     {
-        private float _creditLimit;
-        private float _creditPercent;
-        private float _percent;
-        public CreditAccount(Bank bank, Client owner, float creditLimit, float creditPercent)
+        private double _creditLimit;
+        private double _creditPercent;
+        private double _percentSum;
+        public CreditAccount(Bank bank, Client owner, double creditLimit, double creditPercent)
         {
-            amountMoney = 0;
+            AmountMoney = 0;
             Bank = bank;
             Owner = owner;
             _creditLimit = creditLimit;
             _creditPercent = creditPercent;
-            TimerCallback tm = new TimerCallback(PercentCounter);
-            TimerCallback tm2 = new TimerCallback(AccrualPercent);
-            Timer timer1 = new Timer(tm, null, 0, 5184000);
-            Timer timer2 = new Timer(tm2, null, 0, 155520000);
         }
 
-        public override void Replenishment(float amount)
+        public override void Replenishment(double amount)
         {
-            amountMoney = amountMoney + amount;
+            AmountMoney = AmountMoney + amount;
         }
 
-        public override void Withdraw(float amount)
+        public override void Withdraw(double amount)
         {
-            amountMoney = amountMoney - amount;
-            if (amountMoney < _creditLimit) throw new BankException("credit limit exhausted");
+            if (!Owner.IsVerified()) throw new BankException("Client is not Verified");
+            AmountMoney = AmountMoney - amount;
+            if (AmountMoney < 0 - _creditLimit) throw new BankException("credit limit exhausted");
         }
 
-        public override void Transfer(float amount, Account recipient)
+        public override void Transfer(double amount, Account recipient)
         {
+            if (!Owner.IsVerified()) throw new BankException("Client is not Verified");
             Withdraw(amount);
             recipient.Replenishment(amount);
         }
 
-        public override void CancelingTransaction(int id)
+        public override void PercentCounter()
         {
-            throw new System.NotImplementedException();
+            _percentSum += AmountMoney * ((_creditPercent / 365) / 100);
         }
 
-        private void PercentCounter(object obj)
+        public override void AccrualPercent()
         {
-            _percent += amountMoney * ((_creditPercent / 365) / 100);
-        }
-
-        private void AccrualPercent(object obj)
-        {
-            amountMoney -= _percent;
+            AmountMoney -= _percentSum;
         }
     }
 }

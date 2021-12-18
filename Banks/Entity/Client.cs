@@ -1,13 +1,11 @@
-using System.Net.Sockets;
-using System.Security.Cryptography;
 using Banks.Tools;
 
 namespace Banks.Entity
 {
     public class Client
     {
-        private int _passport;
-        private string _address;
+        private int _passport = 0;
+        private string _address = null;
         public Client(string name, string surname)
         {
             Name = name;
@@ -45,7 +43,7 @@ namespace Banks.Entity
 
         public bool IsVerified()
         {
-            if (_passport != null && _address != null)
+            if (_passport != 0 && _address != null)
             {
                 return true;
             }

@@ -5,8 +5,7 @@ namespace Banks.Entity
 {
     public class Bank
     {
-        private List<Account> _accounts = new List<Account>();
-        public Bank(int id, string name, float percentOnBalance, float creditPercent, float creditLimit, int depositTime)
+        public Bank(int id, string name, double percentOnBalance, double creditPercent, double creditLimit, int depositTime)
         {
             Name = name;
             Id = id;
@@ -15,17 +14,19 @@ namespace Banks.Entity
             PercentOnBalance = percentOnBalance;
             CreditLimit = creditLimit;
             DepositTime = depositTime;
+            Accounts = new List<Account>();
             if (percentOnBalance > 100 ||
                 percentOnBalance < 0 ||
                 creditPercent > 100 ||
                 creditPercent < 0) throw new BankException("invalid percent");
         }
 
-        public float PercentOnBalance { get; }
-        public float CreditPercent { get; }
+        public double PercentOnBalance { get; }
+        public double CreditPercent { get; }
         public int DepositTime { get; }
-        public float CreditLimit { get; }
+        public double CreditLimit { get; }
         public List<Client> Clients { get; }
+        public List<Account> Accounts { get; }
 
         public string Name { get; }
         public int Id { get; }
@@ -36,7 +37,7 @@ namespace Banks.Entity
 
         public void AddAccount(Account account)
         {
-            _accounts.Add(account);
+            Accounts.Add(account);
         }
     }
 }

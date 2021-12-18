@@ -1,55 +1,46 @@
-using System;
-using System.Threading;
 using Banks.Tools;
 
 namespace Banks.Entity
 {
     public class DebitAccount : Account
     {
-        private float _percent = 0;
-        private float _percentOnBalance;
-        public DebitAccount(Bank bank, Client owner, float percentOnBalance)
+        private double _percentSum = 0;
+        private double _percentOnBalance;
+        public DebitAccount(Bank bank, Client owner, double percentOnBalance)
         {
-            amountMoney = 0;
+            AmountMoney = 0;
             Bank = bank;
             Owner = owner;
             _percentOnBalance = percentOnBalance;
-            TimerCallback tm = new TimerCallback(PercentCounter);
-            TimerCallback tm2 = new TimerCallback(AccrualPercent);
-            Timer timer1 = new Timer(tm, null, 0, 5184000);
-            Timer timer2 = new Timer(tm2, null, 0, 155520000);
         }
 
-        public override void Replenishment(float amount)
+        public override void Replenishment(double amount)
         {
-            amountMoney = amountMoney + amount;
+            AmountMoney = AmountMoney + amount;
         }
 
-        public override void Withdraw(float amount)
+        public override void Withdraw(double amount)
         {
-            amountMoney = amountMoney - amount;
-            if (amountMoney < 0) throw new BankException("not enough money");
+            if (!Owner.IsVerified()) throw new BankException("Client is not Verified");
+            AmountMoney = AmountMoney - amount;
+            if (AmountMoney < 0) throw new BankException("not enough money");
         }
 
-        public override void Transfer(float amount, Account recipient)
+        public override void Transfer(double amount, Account recipient)
         {
+            if (!Owner.IsVerified()) throw new BankException("Client is not Verified");
             Withdraw(amount);
             recipient.Replenishment(amount);
         }
 
-        public override void CancelingTransaction(int id)
+        public override void PercentCounter()
         {
-            throw new System.NotImplementedException();
+            _percentSum += AmountMoney * ((_percentOnBalance / 365) / 100);
         }
 
-        private void PercentCounter(object obj)
+        public override void AccrualPercent()
         {
-            _percent += amountMoney * ((_percentOnBalance / 365) / 100);
-        }
-
-        private void AccrualPercent(object obj)
-        {
-            amountMoney += _percent;
+            AmountMoney += _percentSum;
         }
     }
 }

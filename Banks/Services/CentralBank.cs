@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Transactions;
 using Banks.Entity;
 
 namespace Banks.Services
@@ -14,9 +13,9 @@ namespace Banks.Services
             _banks = new List<Bank>();
         }
 
-        public Bank CreateBank(string name, float percentOnBalance, float creditPercent, float creditLimit, int depositTime)
+        public Bank CreateBank(string name, double percentOnBalance, double creditPercent, double creditLimit, int depositTime)
         {
-            Bank bank = new Bank(_id, name, percentOnBalance, creditPercent, creditLimit, depositTime);
+            var bank = new Bank(_id, name, percentOnBalance, creditPercent, creditLimit, depositTime);
             _banks.Add(bank);
             _id++;
             return bank;
@@ -26,6 +25,28 @@ namespace Banks.Services
         {
             Bank bank = _banks.Find(b => b.Clients.Contains(client));
             return bank;
+        }
+
+        public void DayPassed()
+        {
+            foreach (var bank in _banks)
+            {
+                foreach (var account in bank.Accounts)
+                {
+                    account.PercentCounter();
+                }
+            }
+        }
+
+        public void MonthPassed()
+        {
+            foreach (var bank in _banks)
+            {
+                foreach (var account in bank.Accounts)
+                {
+                    account.AccrualPercent();
+                }
+            }
         }
     }
 }
