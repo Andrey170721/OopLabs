@@ -10,7 +10,7 @@ namespace Reports.Services
         private List<Employee> _employees = new List<Employee>();
         private List<Task> _tasks = new List<Task>();
         private List<Report> _reports = new List<Report>();
-        private TeamLead TeamLead;
+        public TeamLead TeamLead { get; }
 
         public TaskService(string teamLeadName)
         {
@@ -76,6 +76,25 @@ namespace Reports.Services
             if (_reports.Count != _employees.Count) throw new ReportException("not all employees have uploaded reports");
             SprintReport sprintReport = new SprintReport(_reports);
             return sprintReport;
+        }
+
+        public List<Employee> GetAllEmployees()
+        {
+            if (_employees.Count == 0) return null;
+            return _employees;
+        }
+
+        public List<Task> GetAllTasks()
+        {
+            if (_tasks.Count == 0) return null;
+            return _tasks;
+        }
+
+        public List<Task> GetEmployeeTask(Employee employee)
+        {
+            if (_tasks.Exists(t => t.Employee == employee)) return null;
+            List<Task> tasks = _tasks.FindAll(t => t.Employee == employee);
+            return tasks;
         }
     }
 }
