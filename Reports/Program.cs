@@ -1,7 +1,5 @@
 ﻿using Reports.Console;
-using Reports.Entity;
-using Reports.Services;
-using Reports.Tools;
+
 
 namespace Reports
 {

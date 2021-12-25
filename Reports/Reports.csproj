@@ -46,8 +46,16 @@
         <Compile Include="Console\GetTasks.cs" />
         <Compile Include="Console\MakeReport.cs" />
         <Compile Include="Console\UserConsole.cs" />
+        <Compile Include="Entity\employee.cs" />
+        <Compile Include="Entity\Report.cs" />
+        <Compile Include="Entity\SprintReport.cs" />
+        <Compile Include="Entity\Task.cs" />
+        <Compile Include="Entity\TeamLead.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="Services\TaskService.cs" />
+        <Compile Include="Tools\ReportException.cs" />
+        <Compile Include="Tools\Status.cs" />
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Repositories" />
