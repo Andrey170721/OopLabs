@@ -8,38 +8,36 @@ namespace Backups.Repositories
     public class FileStorageRepository
     {
         private int _storageNum = 1;
-        public string CreateSplitStorage(List<string> lines, string path)
+        public string CreateSplitStorage(List<string> files, string path)
         {
-            int fileNum = 1;
             string directoryName = path + "/" + "RestorePoint_" + _storageNum;
             _storageNum++;
             Directory.CreateDirectory(directoryName);
-            foreach (string line in lines)
+            foreach (string sourceFile in files)
             {
-                string fileName = path + "/" + "file_" + fileNum;
-                File.Copy(path, fileName);
-                fileNum++;
+                string name = Path.GetFileName(sourceFile);
+                string destFileName = directoryName + "/" + name;
+                File.Copy(sourceFile, destFileName);
             }
 
             return directoryName;
         }
 
-        public string CreateSingleStorage(List<string> lines, string path)
+        public string CreateSingleStorage(List<string> files, string path)
         {
-            int fileNum = 1;
             string directoryName = path + "/" + "RestorePoint_" + _storageNum;
             _storageNum++;
             Directory.CreateDirectory(directoryName);
-            foreach (string line in lines)
+            foreach (string sourceFile in files)
             {
-                string fileName = path + "/" + "file_" + fileNum;
-                File.Copy(path, fileName);
-                fileNum++;
+                string name = Path.GetFileName(sourceFile);
+                string destFileName = directoryName + "/" + name;
+                File.Copy(sourceFile, destFileName);
             }
 
             string zipFileName = directoryName + "_zip";
             ZipFile.CreateFromDirectory(directoryName, zipFileName);
-            File.Delete(directoryName);
+            Directory.Delete(directoryName, true);
             return zipFileName;
         }
     }
